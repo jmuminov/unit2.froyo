@@ -1,29 +1,44 @@
 const userInputString = prompt(
-    "Please enter some froyo flavors separated by commas as can be seen below:",
-    "strawberry,vanilla,chocolate,strawberry,vanilla,peanut,chocolate"
+  "Please enter some froyo flavors separated by commas as can be seen below:",
+  "strawberry,vanilla,chocolate,strawberry,vanilla,peanut,chocolate"
 );
 
 const stringArray = userInputString.split(",");
 
-console.log(stringArray)
+console.log(stringArray);
 
-function flavors (array) {
-    const numFlavors = {};
+function flavorsV1(array) {
+  const numFlavors = {};
+  for (let i = 0; i < array.length; i++) {
+    numFlavors[array[i]] = 0;
+  }
+  for (const key in numFlavors) {
+    let counter = 0;
     for (let i = 0; i < array.length; i++) {
-        numFlavors[array[i]] = 0;
+      if (key === array[i]) {
+        counter++;
+      }
     }
-    for (const key in numFlavors) {
-        let counter = 0;
-        for (let i = 0; i < array.length; i++) {
-            if (key === array[i]) {
-                counter++
-            }
-        }
-        numFlavors[key] = counter;
-    }
-    return numFlavors;
+    numFlavors[key] = counter;
+  }
+  return numFlavors;
 }
 
-const numOfFlavors = flavors(stringArray);
+function flavorsV2(array) {
+  const numFlavors = {};
+  for (let i = 0; i < array.length; i++) {
+    const flavor = array[i].trim();
+    if (numFlavors[flavor]) {
+      numFlavors[flavor]++;
+    } else {
+      numFlavors[flavor] = 1;
+    }
+  }
+  return numFlavors;
+}
 
-console.log(numOfFlavors);
+const numOfFlavorsV1 = flavorsV1(stringArray);
+console.log(numOfFlavorsV1);
+
+const numOfFlavorsV2 = flavorsV2(stringArray);
+console.log(numOfFlavorsV2);
